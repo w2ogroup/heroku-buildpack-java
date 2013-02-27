@@ -70,12 +70,14 @@ if [ ! -d .maven ]; then
   echo " done"
 fi
 
+cd $BUILD_DIR
+
 MAVEN_SETTINGS_URL="http://s3.amazonaws.com/heroku-jvm-langpack-java/settings.xml"
 
 echo -n "-----> Installing settings.xml..."
 # if the project contains a 'settings.xml' use that instead of the heroku default
 if [ -f settings.xml ]; then
-    MAVEN_SETTINGS_FILE=settings.xml
+    MAVEN_SETTINGS_FILE=$BUILD_DIR/settings.xml
 else
     if [ -f .m2/settings.xml ]; then
       rm .m2/settings.xml
