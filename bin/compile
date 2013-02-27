@@ -73,8 +73,8 @@ MAVEN_SETTINGS_URL="http://s3.amazonaws.com/heroku-jvm-langpack-java/settings.xm
 
 echo -n "-----> Installing settings.xml..."
 # if the project contains a 'settings.xml' use that instead of the heroku default
-if [ -f $BUILD_DIR/settings.xml ]; then
-    MAVEN_SETTINGS_FILE=$BUILD_DIR/settings.xml
+if [ -f settings.xml ]; then
+    MAVEN_SETTINGS_FILE=settings.xml
 else
     if [ -f .m2/settings.xml ]; then
       rm .m2/settings.xml
@@ -85,12 +85,12 @@ fi
 echo " done"
 
 # change to build dir to run maven
-cd $BUILD_DIR
+cd $BUILD_DIRlabs-dashboard-all
 
 export MAVEN_OPTS="-Xmx512m"
 
 # build app
-BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean install"
+BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR/labs-dashboard-all -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean install"
 echo "-----> executing $BUILDCMD"
 
 $BUILDCMD 2>&1 | sed -u 's/^/       /'
