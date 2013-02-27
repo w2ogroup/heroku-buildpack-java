@@ -10,6 +10,7 @@ BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 # parse args
 BUILD_DIR=$1
 CACHE_DIR=$2
+MAVEN_DIR=${BUILD_DIR}/labs-dashboard-all
 LOGGER_FLAGS=""
 
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
@@ -69,6 +70,8 @@ if [ ! -d .maven ]; then
   echo " done"
 fi
 
+cd $BUILD_DIR
+
 MAVEN_SETTINGS_URL="http://s3.amazonaws.com/heroku-jvm-langpack-java/settings.xml"
 
 echo -n "-----> Installing settings.xml..."
@@ -85,12 +88,12 @@ fi
 echo " done"
 
 # change to build dir to run maven
-cd $BUILD_DIRlabs-dashboard-all
+cd $MAVEN_DIR
 
 export MAVEN_OPTS="-Xmx512m"
 
 # build app
-BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIRlabs-dashboard-all -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean install"
+BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean install"
 
 echo "-----> executing $BUILDCMD"
 
