@@ -117,3 +117,5 @@ if [ "true" == $KEEP_M2_CACHE ]; then
 fi
 
 logger -p user.notice -t "slugc[$$]" "language_pack_java java_compile_end $LOGGER_FLAGS"
+
+cd $BUILD_DIR
