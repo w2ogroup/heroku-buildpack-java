@@ -10,7 +10,8 @@ BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 # parse args
 BUILD_DIR=$1
 CACHE_DIR=$2
-MAVEN_DIR=${BUILD_DIR}/labs-dashboard-all
+APP_NAME=streams
+MAVEN_DIR=${BUILD_DIR}/labs-$APP_NAME-all
 LOGGER_FLAGS=""
 
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
@@ -116,7 +117,7 @@ if [ "true" == $KEEP_M2_CACHE ]; then
   done
 fi
 
-cd ../labs-dashboard-console
+cd ../labs-$APP_NAME-support
 
 # build app
 CLEANCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean"
