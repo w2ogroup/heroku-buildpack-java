@@ -10,8 +10,9 @@ BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 # parse args
 BUILD_DIR=$1
 CACHE_DIR=$2
-APP_NAME=streams
+APP_NAME=dashboard
 MAVEN_DIR=${BUILD_DIR}/labs-$APP_NAME-all
+RUN_DIR=${BUILD_DIR}/labs-$APP_NAME-service
 LOGGER_FLAGS=""
 
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
@@ -128,4 +129,4 @@ $CLEANCMD 2>&1 | sed -u 's/^/       /'
 
 logger -p user.notice -t "slugc[$$]" "language_pack_java java_compile_end $LOGGER_FLAGS"
 
-cd $BUILD_DIR
+cd $RUN_DIR
