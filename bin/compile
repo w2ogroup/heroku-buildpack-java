@@ -11,8 +11,8 @@ BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 BUILD_DIR=$1
 CACHE_DIR=$2
 MODULE=tribe
-MAVEN_DIR=${BUILD_DIR}/labs-$MODULE-all
-RUN_DIR=${BUILD_DIR}/labs-$MODULE-service
+MAVEN_DIR=${BUILD_DIR}/labs-$MODULE
+RUN_DIR=${BUILD_DIR}/labs-$MODULE
 LOGGER_FLAGS=""
 
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
@@ -95,7 +95,10 @@ cd $MAVEN_DIR
 export MAVEN_OPTS="-Xmx512m"
 
 # build app
-BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean install"
+BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE org.apache.maven.plugins:maven-dependency-plugin:2.4:get \
+    -DremoteRepositories=raveldata.artifactoryonline.com/raveldata/ext-binaries-local \
+    -Dartifact=ultrawrap:ultrawrap:1.0.6:mdigitallife:zip \
+    -Ddest=./ultrawrap-1.0.6.zip"
 
 echo "-----> executing $BUILDCMD"
 
@@ -118,7 +121,7 @@ if [ "true" == $KEEP_M2_CACHE ]; then
   done
 fi
 
-cd ../labs-$APP_NAME-support
+unzip ultrawrap-1.0.6.zip
 
 # build app
 CLEANCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean"
