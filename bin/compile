@@ -118,7 +118,13 @@ if [ "true" == $KEEP_M2_CACHE ]; then
   done
 fi
 
-unzip ultrawrap-1.0.6.zip
+# build app
+BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE org.apache.maven.plugins:maven-dependency-plugin:2.4:unpack \
+    -Dartifact=ultrawrap-1.0.6.zip 
+
+echo "-----> executing $BUILDCMD"
+
+$BUILDCMD 2>&1 | sed -u 's/^/       /'
 
 # build app
 CLEANCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean"
