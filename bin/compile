@@ -94,7 +94,7 @@ export MAVEN_OPTS="-Xmx512m"
 # build app
 BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE org.apache.maven.plugins:maven-dependency-plugin:2.4:get \
     -DremoteRepositories=raveldata.artifactoryonline.com/raveldata/ext-binaries-local \
-    -Dartifact=ultrawrap:ultrawrap:1.0.6:mdigitallife:zip \
+    -Dartifact=ultrawrap:ultrawrap:1.0.6:zip:mdigitallife \
     -Ddest=./ultrawrap-1.0.6.zip"
 
 echo "-----> executing $BUILDCMD"
