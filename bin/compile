@@ -94,7 +94,7 @@ export MAVEN_OPTS="-Xmx512m"
 # build app
 BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE org.apache.maven.plugins:maven-dependency-plugin:2.7:get \
     -DremoteRepositories=raveldata.artifactoryonline.com/raveldata/ext-binaries-local \
-    -Dartifact=rexster:rexster:2.3.0:zip:mdigitallife"
+    -Dartifact=rexster-server:rexster-server:2.3.0:zip:mdigitallife"
 
 echo "-----> executing $BUILDCMD"
 
@@ -119,7 +119,7 @@ fi
 
 # build app
 BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE org.apache.maven.plugins:maven-dependency-plugin:2.7:unpack \
-    -Dartifact=rexster:rexster:2.3.0:zip:mdigitallife -DoutputDirectory=. -DoverWriteIfNewer=true"
+    -Dartifact=rexster-server:rexster-server:2.3.0:zip:mdigitallife -DoutputDirectory=. -DoverWriteIfNewer=true"
 
 echo "-----> executing $BUILDCMD"
 
