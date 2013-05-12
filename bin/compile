@@ -10,7 +10,6 @@ BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 # parse args
 BUILD_DIR=$1
 CACHE_DIR=$2
-MODULE=tribe
 MAVEN_DIR=${BUILD_DIR}/labs-$MODULE-all
 RUN_DIR=${BUILD_DIR}/labs-$MODULE-service
 LOGGER_FLAGS=""
