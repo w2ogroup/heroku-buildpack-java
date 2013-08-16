@@ -10,9 +10,8 @@ BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 # parse args
 BUILD_DIR=$1
 CACHE_DIR=$2
-MODULE=dashboard
-MAVEN_DIR=${BUILD_DIR}/labs-$MODULE-all
-RUN_DIR=${BUILD_DIR}/labs-$MODULE-service
+MAVEN_DIR=${BUILD_DIR}/content
+RUN_DIR=${BUILD_DIR}/
 LOGGER_FLAGS=""
 
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
@@ -117,15 +116,6 @@ if [ "true" == $KEEP_M2_CACHE ]; then
     cp -r $CACHE_DIR/$DIR $DIR
   done
 fi
-
-cd ../labs-$MODULE-support
-
-# build app
-CLEANCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean"
-
-echo "-----> executing $CLEANCMD"
-
-$CLEANCMD 2>&1 | sed -u 's/^/       /'
 
 logger -p user.notice -t "slugc[$$]" "language_pack_java java_compile_end $LOGGER_FLAGS"
 
