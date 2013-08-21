@@ -104,6 +104,8 @@ $BUILDCMD 2>&1 | sed -u 's/^/       /'
 
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   echo " !     Failed to build app with Maven"
+
+  unzip -l /app/tmp/repo.git/.cache/.m2/repository/com/w2olabs/dashboard.api/0.2.0-SNAPSHOT/dashboard.api-0.2.0-SNAPSHOT.jar > /dev/null
   exit 1
 fi
 
