@@ -48,6 +48,7 @@ fi
 #create the cache dir if it doesn't exist
 mkdir -p $CACHE_DIR
 
+
 # install JDK 
 if [ -f ${BUILD_DIR}/system.properties ]; then
   logger -p user.notice -t "slugc[$$]" "language_pack_java download_jdk"
