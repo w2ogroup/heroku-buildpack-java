@@ -64,10 +64,12 @@ fi
 cd $CACHE_DIR
 
 # install maven with base repository
-MAVEN_URL="http://s3.amazonaws.com/heroku-jvm-langpack-java/maven.tar.gz"
+## MAVEN_URL="http://s3.amazonaws.com/heroku-jvm-langpack-java/maven.tar.gz"
+## Smashew - made this change to see if it would resolve the shading issue.
+MAVEN_URL="http://com.w2olabs.heroku.mavens.s3.amazonaws.com/smashew-maven-3_0_5.tar.gz"
 
 if [ ! -d .maven ]; then
-  echo -n "-----> Installing Maven 3.0.3..."
+  echo -n "-----> Installing Smashew's Maven 3.0.5..."
   curl --silent --max-time 60 --location $MAVEN_URL | tar xz
   chmod +x .maven/bin/mvn
   echo " done"
@@ -95,8 +97,11 @@ cd $MAVEN_DIR
 
 export MAVEN_OPTS="-Xmx512m"
 
+rm -rf /app/tmp/repo.git/.cache/.m2/repository/*
+
 # build app
-BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean install -U"
+#BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean install -U"
+BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -U -e -f $BUILD_DIR/content/pom.xml -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean install"
 
 echo "-----> executing $BUILDCMD"
 
@@ -104,7 +109,7 @@ $BUILDCMD 2>&1 | sed -u 's/^/       /'
 
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   echo " !     Failed to build app with Maven"
-
+  ls /app/tmp/repo.git/.cache/.m2/repository/com/w2olabs/dashboard.api/0.2.0-SNAPSHOT/* -lh
   jar tf /app/tmp/repo.git/.cache/.m2/repository/com/w2olabs/dashboard.api/0.2.0-SNAPSHOT/dashboard.api-0.2.0-SNAPSHOT.jar > /dev/null
   exit 1
 fi
