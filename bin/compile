@@ -19,6 +19,8 @@ curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack
 
 KEEP_M2_CACHE="true"
 
+rm -rf $CACHE_DIR
+
 # create default system.properties for apps that had the jdk vendored in 
 if [ -f ${CACHE_DIR}/.jdk/vendor ] && [ ! -f ${BUILD_DIR}/system.properties ]; then
   echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
