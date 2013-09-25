@@ -123,15 +123,6 @@ if [ "true" == $KEEP_M2_CACHE ]; then
   done
 fi
 
-cd ../labs-$APP_NAME-support
-
-# build app
-CLEANCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean"
-
-echo "-----> executing $CLEANCMD"
-
-$CLEANCMD 2>&1 | sed -u 's/^/       /'
-
 logger -p user.notice -t "slugc[$$]" "language_pack_java java_compile_end $LOGGER_FLAGS"
 
 cd $RUN_DIR
