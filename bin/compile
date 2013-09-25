@@ -89,10 +89,15 @@ else
 fi
 echo " done"
 
-# change to build dir to run maven
+echo -n "-----> Switching to $MAVEN_DIR..."
 cd $MAVEN_DIR
+echo "done"
+
+# change to build dir to run maven
 
 export MAVEN_OPTS="-Xmx512m"
+
+echo -n "-----> Preparing to build $APP_NAME..."
 
 # build app
 BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$MAVEN_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $MAVEN_SETTINGS_FILE -DskipTests=true clean install"
