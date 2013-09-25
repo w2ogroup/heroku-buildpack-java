@@ -11,8 +11,8 @@ BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 BUILD_DIR=$1
 CACHE_DIR=$2
 APP_NAME=dashboard
-MAVEN_DIR=${BUILD_DIR}/labs-$APP_NAME-all
-RUN_DIR=${BUILD_DIR}/labs-$APP_NAME-service
+MAVEN_DIR=${BUILD_DIR}/$APP_NAME
+RUN_DIR=${BUILD_DIR}
 LOGGER_FLAGS=""
 
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
